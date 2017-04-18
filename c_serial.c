@@ -18,10 +18,11 @@
 /*
  * Platform-specific definitions
  */
+#include <mex.h>
 #ifdef _WIN32
 
 #include <windows.h>
-#include <mex.h>
+
 #define __func__ __FUNCTION__
 
 #define close( x ) CloseHandle( x )
@@ -344,7 +345,11 @@ static int set_baud_rate( c_serial_port_t* desc, int baud_rate ) {
         SPEED_SWITCH(19200,newio);
         SPEED_SWITCH(38400,newio);
         SPEED_SWITCH(115200,newio);
+#ifdef _WIN32
         case 921600: newio.BaudRate = 921600; break;
+#else
+        case 921600: cfsetospeed( &newio, B921600 ); cfsetispeed( &newio, B921600 ); break;
+#endif
     }
 
     SET_SERIAL_PORT_STRUCT( desc, newio );

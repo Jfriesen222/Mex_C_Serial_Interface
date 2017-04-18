@@ -1,16 +1,15 @@
 %Run these mex commands to build the mex functions before executing this
 %example:
 %
-% mex getPortNames.cpp c_serial.c;
-% mex openPort.cpp c_serial.c;
-% mex writePort.cpp c_serial.c;
-% mex readPort.cpp c_serial.c;
-% mex closePort.cpp c_serial.c;
+% mex getPortNames.c c_serial.c;
+% mex openPort.c c_serial.c;
+% mex writePort.c c_serial.c;
+% mex readPort.c c_serial.c;
+% mex closePort.c c_serial.c;
 
 %Need to put n arguments for n ports available you wish to find... probably a cleaner way to
 %do this but oh well. 
-[name1, name2, name3] = getPortNames; 
-
+[name1, name2, name3,name4,name5,name6] = getPortNames; 
 %Currently only works with standard baud rate i.e. 9600, 23400, 115200,
 %921600 (note I added 921600 for windows only by editing c_serial.h and c_Serial.c so it is
 %possible to add more with a bit of editing)
@@ -22,7 +21,7 @@ baudrate = 921600;
 portPointer = openPort(name1,baudrate);
 
 %String we will print out to serial port
-string = '$ Hello World, hope you are well $';
+string = '$Hello World, hope you are well and happily happy$';
 
 %Must convert to uint8 before sending out data
 dataOut = uint8(string); 

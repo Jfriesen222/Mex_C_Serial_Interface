@@ -22,7 +22,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     mwSize total_num_of_elements, index;
     data = (uint8_t *)mxGetData(prhs[1]);
     data_length = mxGetNumberOfElements(prhs[1]);
-    m_port = reinterpret_cast<c_serial_port_t*>(*((uint64_t *)mxGetData(prhs[0])));
+    m_port =(c_serial_port_t*)(*((uint64_t *)mxGetData(prhs[0])));
     int iii;
     status = c_serial_write_data( m_port, data, &data_length );
     if( status < 0 ){

@@ -7,8 +7,10 @@ static c_serial_port_t* m_port;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     int status;
-    char portName[6];
+    char portName[255];
     mxGetString(prhs[0], portName, sizeof(portName));
+    double *baudRate;
+    baudRate = mxGetPr(prhs[1]);
     if( c_serial_new( &m_port, NULL ) < 0 ){
         mexPrintf("ERROR: Unable to create new serial port\n" );
         return;
@@ -24,7 +26,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 //     /*
 //      * Set various serial port settings.  These are the default.
 //      */
-    c_serial_set_baud_rate( m_port, CSERIAL_BAUD_921600 );
+    c_serial_set_baud_rate( m_port,((int)  baudRate[0]));
     c_serial_set_data_bits( m_port, CSERIAL_BITS_8 );
     c_serial_set_stop_bits( m_port, CSERIAL_STOP_BITS_1 );
     c_serial_set_parity( m_port, CSERIAL_PARITY_NONE );
@@ -41,7 +43,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     }
     mxArray *out = mxCreateNumericMatrix(1, 1, mxUINT64_CLASS, mxREAL);
-    *((uint64_t *)mxGetData(out)) = reinterpret_cast<uint64_t>(m_port);
+    *((uint64_t *)mxGetData(out)) = (uint64_t)(m_port);
     plhs[0] = out;
 }
 

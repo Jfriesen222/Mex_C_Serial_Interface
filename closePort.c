@@ -10,7 +10,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs","Please send serial port object.");
     }
     c_serial_port_t* m_port;
-    m_port = reinterpret_cast<c_serial_port_t*>(*((uint64_t *)mxGetData(prhs[0])));
+    m_port = (c_serial_port_t*)(*((uint64_t *)mxGetData(prhs[0])));
     c_serial_free(m_port);
 }
 
