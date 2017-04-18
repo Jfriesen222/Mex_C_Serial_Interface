@@ -1,11 +1,12 @@
 %Run these mex commands to build the mex functions before executing this
 %example:
-%
-% mex getPortNames.c c_serial.c;
-% mex openPort.c c_serial.c;
-% mex writePort.c c_serial.c;
-% mex readPort.c c_serial.c;
-% mex closePort.c c_serial.c;
+%{
+mex getPortNames.c c_serial.c;
+mex openPort.c c_serial.c;
+mex writePort.c c_serial.c;
+mex readPort.c c_serial.c;
+mex closePort.c c_serial.c;
+%}
 
 %Need to put n arguments for n ports available you wish to find... probably a cleaner way to
 %do this but oh well. 
@@ -18,7 +19,7 @@ baudrate = 921600;
 %Don't mess with this port pointer because once you lose it you can't
 %access your serial port anymore. Essentially is just a 64 bit integer that
 %stores the pointer value... not sure how this works cross-platform
-portPointer = openPort(name1,baudrate);
+%portPointer = openPort(name3,baudrate);
 
 %String we will print out to serial port
 string = '$Hello World, hope you are well and happily happy$';
@@ -39,11 +40,12 @@ numBytesToRead = 50;
 %return all the contents that were in the buffer upon timeout. If the
 %buffer contains more data than numBytesToRead then leftOverBytesInBuffer
 %will tell you how many bytes remain in the buffer after the read operation
+tic;
 [dataIn , leftOverBytesInBuffer] = readPort(portPointer, numBytesToRead);
-
+toc;
 %Close the port when you are all finished... if you forget to close it
 %unplugging and replugging the serial device will allow you to re-open the
 %device
-closePort(portPointer);
+%closePort(portPointer);
 
 
